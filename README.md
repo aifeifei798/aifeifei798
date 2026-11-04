@@ -41,13 +41,16 @@ Every repo below is an attempt at one of those, built end-to-end: kernels and tr
 | **[Heretic-Scalpel-TriTier-E2B](https://github.com/aifeifei798/Heretic-Scalpel-TriTier-E2B)** | Tri-Tier Swarm Mixture-of-Adapters on a Gemma 4 (E2B) backbone — three adapters, three roles, one frozen trunk. |
 | **[Heretic-Scalpel-Swarm-Forge](https://github.com/aifeifei798/Heretic-Scalpel-Swarm-Forge)** | The training side of the series: `forge_core` (pure-ML library) + FastAPI backend + React console. |
 | **[myriad-moe-console](https://github.com/aifeifei798/myriad-moe-console)** | Web client for the 25K-expert model: streaming chat, collapsible reasoning traces, and a live view of which experts fired. |
+| **[moe-experiments-index](https://github.com/aifeifei798/moe-experiments-index)** | The ledger for the series: one repo per controlled experiment, recording variable → result → status. |
+
+Weights from the series ship on Hugging Face — [myriad-qwen3.5-0.8b](https://huggingface.co/aifeifei798/myriad-qwen3.5-0.8b), [Myriad-MoE-E2B](https://huggingface.co/aifeifei798/Myriad-MoE-E2B) — with the same-named GitHub repos as release mirrors.
 
 ### Architecture reproduction, from scratch
 
 | Project | What it is |
 | :--- | :--- |
 | **[DeepSeek-Pro-Mini](https://github.com/aifeifei798/DeepSeek-Pro-Mini)** | A from-zero reimplementation of the DeepSeek-V3/V4 core — MLA latent attention, 8-expert sparse MoE, SqrtSoftplus gating, bounded SwiGLU. 153M total / 60M active, **52k+ tok/s** on one GPU, 245M-token pretrain + 900k SFT turns, with a real-time MoE gate heatmap in the terminal. |
-| **[Mini-Architecture](https://github.com/aifeifei798/Mini-Architecture)** | Small reference implementations of the pieces I keep re-deriving. |
+| **[Mini-Architecture](https://github.com/aifeifei798/Mini-Architecture)** | The minimal DeepSeek V4.1 repro in a single `model_v41.py`: mHC hyper-connections, MiniMLA, cross-layer sparse indexer, 8 routed experts top-2 + 1 shared. 3.56M params, 20 samples, ~45 s to train — long-context and ablation scripts included. |
 
 ### Inference efficiency & interpretability
 
@@ -55,6 +58,8 @@ Every repo below is an attempt at one of those, built end-to-end: kernels and tr
 | :--- | :--- |
 | **[flashcodec-kv](https://github.com/aifeifei798/flashcodec-kv)** | Treats the sequence axis of a `(B,H,S,D)` KV cache as an image: JPEG-style block DCT in the frequency domain, PNG-style anchor + delta coding in the time domain. Drop-in `transformers` 5.x `Cache` backend. |
 | **[Harmonic-LLM](https://github.com/aifeifei798/Harmonic-LLM)** | Training-free amplitude outlier suppression for `q_proj` / `o_proj`: crest-factor sidechain detection plus 8-band DCT wave-shaping, one forward hook, no weights touched. On PyPI. |
+| **[Strata-Ngram-Demo](https://github.com/aifeifei798/Strata-Ngram-Demo)** | Strata-style hierarchical inference on one card: model in VRAM, n-gram lookup table on SSD read via mmap, drafting speculative tokens for LFM3-VL-2B. Greedy output matches baseline token-for-token; 5.1× speedup on repetitive-context tasks. |
+| **[qwen-neuron-probe](https://github.com/aifeifei798/qwen-neuron-probe)** | Activation probe and intervention bench for Qwen3-4B: layer-wise clamping and steering, interpretability and safety-alignment failure modes. |
 
 ### Training & applied ML services
 
@@ -70,19 +75,25 @@ Every repo below is an attempt at one of those, built end-to-end: kernels and tr
 
 | Project | What it is |
 | :--- | :--- |
+| **[YuE2-Workbench](https://github.com/aifeifei798/YuE2-Workbench)** / **[YuE2-Studio](https://github.com/aifeifei798/YuE2-Studio)** | Integrated offline AI music pipeline — lyrics-to-song, cover remixing, transcription, four-stem separation, blind listening tests, mastering — plus its containerized FastAPI + Vite/React deployment with GPU queue and admin console. |
+| **[music_studio](https://github.com/aifeifei798/music_studio)** | Desktop song workstation on YuE2-3B — lyrics in, 48 kHz stereo track with vocals out. |
+| **[krea2-turbo-app](https://github.com/aifeifei798/krea2-turbo-app)** | Local text-to-image workbench for Krea 2 Turbo (12B distilled): 8-step second-scale generation, SDEdit img2img, resident LoRA mixing, 800+ Chinese style presets, task queue and gallery; int8/int4 pre-quantization cuts cold start ~3×. FastAPI + vanilla JS on one RTX 5090. |
 | **[ComfyUI-FeiFei](https://github.com/aifeifei798/ComfyUI-FeiFei)** | ComfyUI node pack: LLM prompt director, prompt enhancing, captioning, aspect-ratio sizing, style/character templates, film grain and tone grading, subtitle cropping. |
 | **[global-style-photobook-studio](https://github.com/aifeifei798/global-style-photobook-studio)** | Six-style photobook prompt generator (HK / JP / KR / NY / CA / swimwear), 400+ presets, 92 curated sets. |
+| **[image-story-pictorial](https://github.com/aifeifei798/image-story-pictorial)** | Bilingual magazine-style gallery over 10k image stories: keyword + embedding semantic search, tags, editors, slideshow. |
 | **[Beautiful-Singing-Voice-VST3](https://github.com/aifeifei798/Beautiful-Singing-Voice-VST3)** | PyQt6 tool that fixes AI-generated vocals: Demucs stem split, fixed DSP chain, A/B monitoring. |
-| **[music_studio](https://github.com/aifeifei798/music_studio)** | Desktop song workstation on YuE2-3B — lyrics in, 48 kHz stereo track with vocals out. |
 | **[FastMusic](https://github.com/aifeifei798/FastMusic)** | Local music/MTV streaming player: React SPA + Express, HTTP-Range playback, `.mkv` remux, 10-band EQ and spectrum view. |
+| **[MoonTVPlus](https://github.com/aifeifei798/MoonTVPlus)** | Wire-compatible FastAPI + Vite/React port of MoonTV. |
 | **[stereo_eq](https://github.com/aifeifei798/stereo_eq)** | Real-time PipeWire system-output and mic-monitor EQ for Linux, 60 presets. |
 
 ### Developer tooling
 
 | Project | What it is |
 | :--- | :--- |
+| **[design-forge](https://github.com/aifeifei798/design-forge)** | A self-built UI design skill for coding agents: rule tiers, OKLCH visual recipes, a deterministic linter (static + optional multi-width rendering). Pure Node, no binaries, no telemetry. |
 | **[opencode-monitor](https://github.com/aifeifei798/opencode-monitor)** | Read-only dashboard that draws an OpenCode run as a live graph and tells you *why* it is stuck. |
 | **[context-mode-opencode-v2](https://github.com/aifeifei798/context-mode-opencode-v2)** | Context-mode wrapped as an OpenCode v2 plugin. |
+| **[context-mode-zcode](https://github.com/aifeifei798/context-mode-zcode)** | Runs context-mode as a systemd `--user` MCP service (stdio → Streamable HTTP), one-command install for ZCode. |
 | **[feicms](https://github.com/aifeifei798/feicms)** | Multi-source resource aggregation: collectors → DB → FastAPI → DaisyUI admin panel. |
 
 I also run patched forks of **llama.cpp**, **transformers**, and **opencode** whenever the upstream is the thing standing in the way — a fair share of the commits in my graph are there.
@@ -103,8 +114,10 @@ I also run patched forks of **llama.cpp**, **transformers**, and **opencode** wh
 
 <div align="center">
 
-<img height="150" src="https://github-readme-stats.vercel.app/api?username=aifeifei798&show_icons=true&hide_title=true&hide_border=true&theme=github_dark" alt="GitHub stats" />
-<img height="150" src="https://github-readme-stats.vercel.app/api/top-langs/?username=aifeifei798&layout=compact&hide_border=true&theme=github_dark&langs_count=8" alt="Top languages" />
+<img height="165" src="assets/stats.svg" alt="GitHub stats" />
+<img height="165" src="assets/top-langs.svg" alt="Top languages" />
+
+<sub>Generated weekly by <a href="https://github.com/aifeifei798/aifeifei798/blob/main/scripts/generate_stats.py">scripts/generate_stats.py</a> — GitHub API straight into committed SVGs, no third-party renderer to go down.</sub>
 
 </div>
 
